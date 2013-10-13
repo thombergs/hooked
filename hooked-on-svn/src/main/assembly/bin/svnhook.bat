@@ -16,6 +16,6 @@ goto setArgs
 echo %CMD_LINE_ARGS%
 
 :ok
-java -jar %HOOKED_ON_SVN_HOME%/lib/hooked-on-svn-1.0-SNAPSHOT.jar %CMD_LINE_ARGS%
+java -jar %HOOKED_ON_SVN_HOME%/lib/hooked-on-svn-${project.version}.jar %CMD_LINE_ARGS%
 
 :end

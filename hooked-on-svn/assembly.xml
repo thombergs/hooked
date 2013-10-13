@@ -30,6 +30,7 @@
         <fileSet>
             <directory>src/main/assembly</directory>
             <outputDirectory>/</outputDirectory>
+            <filtered>true</filtered>
         </fileSet>
     </fileSets>
 </assembly>
