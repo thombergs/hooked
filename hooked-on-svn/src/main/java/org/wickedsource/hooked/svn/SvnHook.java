@@ -7,7 +7,6 @@ import org.wickedsource.hooked.plugins.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
@@ -50,8 +49,8 @@ public class SvnHook {
             SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revision);
             SvnCommitData data = collector.collectCommitData();
 
-            CollectorPluginVisitor collectorPluginNotifier = new CollectorPluginVisitor(data, repositoryRoot, revision);
-            List<FileMetrics> metrics = collectorPluginNotifier.visitCollectorPlugins();
+            CollectorPluginVisitor collectorPluginVisitor = new CollectorPluginVisitor(data, repositoryRoot, revision);
+            FileMetrics metrics = collectorPluginVisitor.visitCollectorPlugins();
 
             // TODO: send data to all notifier plugins
             logger.info(String.format("Successfully collected svn commit data: %s", data));

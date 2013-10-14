@@ -2,27 +2,80 @@ package org.wickedsource.hooked.plugins.notifier;
 
 import org.wickedsource.hooked.plugins.collector.api.Metric;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
 public class FileMetrics {
 
-    private final String filePath;
+    private Map<String, Map<Metric, Long>> metrics = new HashMap<>();
 
-    private final List<Metric> metrics;
-
-    public FileMetrics(String filePath, List<Metric> metrics) {
-        this.filePath = filePath;
-        this.metrics = metrics;
+    public void add(String filename, Metric metric, Long value) {
+        Map<Metric, Long> metricValues = getNullSafe(filename);
+        Long currentValue = metricValues.get(metric);
+        if (currentValue == null) {
+            metricValues.put(metric, value);
+        } else {
+            metricValues.put(metric, currentValue + value);
+        }
     }
 
-    public String getFilePath() {
-        return filePath;
+    public void subtract(String filename, Metric metric, Long value) {
+        Map<Metric, Long> metricValues = getNullSafe(filename);
+        Long currentValue = metricValues.get(metric);
+        if (currentValue == null) {
+            metricValues.put(metric, -value);
+        } else {
+            metricValues.put(metric, currentValue - value);
+        }
     }
 
-    public List<Metric> getMetrics() {
-        return metrics;
+    public void set(String filename, Metric metric, Long value) {
+        Map<Metric, Long> metricValues = getNullSafe(filename);
+        metricValues.put(metric, value);
+    }
+
+    public Long get(String filename, Metric metric) {
+        Map<Metric, Long> metricValues = metrics.get(filename);
+        if (metricValues != null) {
+            return metricValues.get(metric);
+        } else {
+            return 0L;
+        }
+    }
+
+    public Map<Metric, Long> getNullSafe(String filename) {
+        Map<Metric, Long> metricValues = metrics.get(filename);
+        if (metricValues == null) {
+            metricValues = new HashMap<>();
+            metrics.put(filename, metricValues);
+        }
+        return metricValues;
+    }
+
+    public Set<Metric> getMetrics(String filename) {
+        Map<Metric, Long> metricValues = metrics.get(filename);
+        if (metricValues == null) {
+            return Collections.emptySet();
+        } else {
+            return metricValues.keySet();
+        }
+    }
+
+    public Set<String> getFilenames() {
+        return metrics.keySet();
+    }
+
+    public void join(FileMetrics container) {
+        for (String filename : container.getFilenames()) {
+            for (Metric metric : container.getMetrics(filename)) {
+                Long value = container.get(filename, metric);
+                this.add(filename, metric, value);
+            }
+        }
     }
 }

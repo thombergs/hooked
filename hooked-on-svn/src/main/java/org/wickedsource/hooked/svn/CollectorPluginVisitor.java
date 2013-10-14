@@ -33,7 +33,7 @@ public class CollectorPluginVisitor {
 
     private final Long revision;
 
-    private List<FileMetrics> metrics = new ArrayList<>();
+    private FileMetrics metrics = new FileMetrics();
 
     public CollectorPluginVisitor(SvnCommitData data, String repositoryRoot, Long revision) {
         this.data = data;
@@ -41,7 +41,7 @@ public class CollectorPluginVisitor {
         this.revision = revision;
     }
 
-    public List<FileMetrics> visitCollectorPlugins() {
+    public FileMetrics visitCollectorPlugins() {
         try {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();
             List<CommittedFile> committedFiles = new ArrayList<>();
@@ -50,7 +50,7 @@ public class CollectorPluginVisitor {
                 lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
                 PipedInputStream in = new PipedInputStream(out);
                 committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), in));
-                visitCollectorPlugins(committedFiles);
+                metrics = visitCollectorPlugins(committedFiles);
             }
             return metrics;
         } catch (SVNException | IOException e) {
@@ -58,11 +58,11 @@ public class CollectorPluginVisitor {
         }
     }
 
-    private List<FileMetrics> visitCollectorPlugins(List<CommittedFile> committedFiles) {
+    private FileMetrics visitCollectorPlugins(List<CommittedFile> committedFiles) {
         Set<CollectorPlugin> plugins = PluginRegistry.INSTANCE.getCollectorPlugins();
         for (CollectorPlugin plugin : plugins) {
             try {
-                metrics.addAll(plugin.analyzeCommittedFiles(committedFiles));
+                metrics.join(plugin.analyzeCommittedFiles(committedFiles));
             } catch (Exception e) {
                 logger.error(String.format("Metrics of plugin %s could not be collected due to exception. Plugin was " +
                         "skipped.", plugin.getClass()), e);

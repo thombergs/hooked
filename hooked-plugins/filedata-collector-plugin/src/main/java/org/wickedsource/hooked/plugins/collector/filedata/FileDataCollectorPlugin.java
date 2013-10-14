@@ -2,13 +2,11 @@ package org.wickedsource.hooked.plugins.collector.filedata;
 
 import org.wickedsource.hooked.plugins.collector.api.CollectorPlugin;
 import org.wickedsource.hooked.plugins.collector.api.CommittedFile;
-import org.wickedsource.hooked.plugins.collector.api.Metric;
 import org.wickedsource.hooked.plugins.notifier.FileMetrics;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +15,12 @@ import java.util.List;
 public class FileDataCollectorPlugin implements CollectorPlugin {
 
     @Override
-    public List<FileMetrics> analyzeCommittedFiles(List<CommittedFile> committedFiles) {
-        List<FileMetrics> resultList = new ArrayList<>();
+    public FileMetrics analyzeCommittedFiles(List<CommittedFile> committedFiles) {
+        FileMetrics resultList = new FileMetrics();
         for (CommittedFile file : committedFiles) {
             try {
-                List<Metric> metrics = analyzeFile(file);
-                FileMetrics fileMetrics = new FileMetrics(file.getMetaData().getPath(), metrics);
-                resultList.add(fileMetrics);
+                FileMetrics metrics = analyzeFile(file);
+                resultList.join(metrics);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -31,20 +28,21 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
         return resultList;
     }
 
-    private List<Metric> analyzeFile(CommittedFile file) throws IOException {
-        FileDataMetricsContainer metrics = new FileDataMetricsContainer();
+    private FileMetrics analyzeFile(CommittedFile file) throws IOException {
+        String filename = file.getMetaData().getPath();
+        FileDataMetrics metrics = new FileDataMetrics();
         BufferedReader in = new BufferedReader(new InputStreamReader(file.getInputStream()));
         String line;
         while ((line = in.readLine()) != null) {
-            metrics.addBytes(line.length() + 1); // +1 for newline
-            metrics.addLines(1);
+            metrics.addBytes(filename, (long) (line.length() + 1)); // +1 for newline
+            metrics.addLines(filename, 1l);
             if ("".equals(line.trim())) {
-                metrics.addEmptyLines(1);
+                metrics.addEmptyLines(filename, 1l);
             }
         }
         // correction since the last line does not contain a newline character
-        metrics.addBytes(-1);
-        return metrics.toList();
+        metrics.addBytes(filename, (long) -1);
+        return metrics;
     }
 
 

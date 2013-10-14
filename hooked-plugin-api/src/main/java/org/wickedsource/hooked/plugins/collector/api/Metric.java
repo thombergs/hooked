@@ -7,31 +7,10 @@ public final class Metric {
 
     private final String id;
 
-    private long value;
-
-    public Metric(String id, long value) {
+    public Metric(String id) {
         this.id = id;
     }
 
-    public Metric(String id) {
-        this(id, 0);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public long getValue() {
-        return value;
-    }
-
-    public void addToValue(long addition) {
-        this.value += addition;
-    }
-
-    public void setValue(long value) {
-        this.value = value;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -40,9 +19,8 @@ public final class Metric {
 
         Metric metric = (Metric) o;
 
-        if (!id.equals(metric.id)) return false;
+        return id.equals(metric.id);
 
-        return true;
     }
 
     @Override

@@ -30,17 +30,14 @@ public class FileDataCollectorPluginTest {
 
         // when analyzing the file with our plugin
         FileDataCollectorPlugin plugin = new FileDataCollectorPlugin();
-        List<FileMetrics> metrics = plugin.analyzeCommittedFiles(fileList);
-        FileMetrics fileMetrics = metrics.get(0);
-        FileDataMetricsContainer metricsContainer = new FileDataMetricsContainer(fileMetrics.getMetrics(),
-                FileDataCollectorPlugin.class);
+        FileMetrics fileMetrics = plugin.analyzeCommittedFiles(fileList);
 
         // then the analyis statistics must be correct
-        Assert.assertEquals(metrics.size(), 1);
-        Assert.assertEquals(metricsContainer.getMetricIds().size(), 3);
-        Assert.assertEquals(metricsContainer.getLines(), 14);
-        Assert.assertEquals(metricsContainer.getBytes(), 631);
-        Assert.assertEquals(metricsContainer.getEmptyLines(), 2);
+        Assert.assertEquals(fileMetrics.get("testfile.txt", FileDataMetrics.LINES), Long.valueOf(14));
+        Assert.assertEquals(fileMetrics.get("testfile.txt", FileDataMetrics.BYTES), Long.valueOf(631));
+        Assert.assertEquals(fileMetrics.get("testfile.txt", FileDataMetrics.EMPTY_LINES), Long.valueOf(2));
+
+
     }
 
 }
