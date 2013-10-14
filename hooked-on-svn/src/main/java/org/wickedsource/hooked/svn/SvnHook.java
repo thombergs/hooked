@@ -50,8 +50,8 @@ public class SvnHook {
             SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revision);
             SvnCommitData data = collector.collectCommitData();
 
-            CollectorPluginNotifier collectorPluginNotifier = new CollectorPluginNotifier(data, repositoryRoot, revision);
-            List<FileMetrics> metrics = collectorPluginNotifier.notifyCollectorPlugins();
+            CollectorPluginVisitor collectorPluginNotifier = new CollectorPluginVisitor(data, repositoryRoot, revision);
+            List<FileMetrics> metrics = collectorPluginNotifier.visitCollectorPlugins();
 
             // TODO: send data to all notifier plugins
             logger.info(String.format("Successfully collected svn commit data: %s", data));

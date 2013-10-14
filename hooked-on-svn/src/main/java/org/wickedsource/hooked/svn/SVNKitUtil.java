@@ -5,7 +5,7 @@ import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 import org.tmatesoft.svn.core.wc.admin.SVNLookClient;
 
-public class SVNKitUtil {
+public final class SVNKitUtil {
 
     private SVNKitUtil() {
     }
@@ -13,7 +13,6 @@ public class SVNKitUtil {
     public static SVNLookClient createSVNLookClient() {
         ISVNOptions options = SVNWCUtil.createDefaultOptions(true);
         SVNClientManager cm = SVNClientManager.newInstance(options);
-        SVNLookClient client = cm.getLookClient();
-        return client;
+        return cm.getLookClient();
     }
 }

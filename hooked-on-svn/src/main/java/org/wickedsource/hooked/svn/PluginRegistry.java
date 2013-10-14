@@ -16,10 +16,9 @@ public enum PluginRegistry {
 
     public Set<CollectorPlugin> getCollectorPlugins() {
         ServiceLoader<CollectorPlugin> loader = ServiceLoader.load(CollectorPlugin.class);
-        Set<CollectorPlugin> plugins = new HashSet<CollectorPlugin>();
-        Iterator<CollectorPlugin> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            plugins.add(iterator.next());
+        Set<CollectorPlugin> plugins = new HashSet<>();
+        for (CollectorPlugin plugin : loader) {
+            plugins.add(plugin);
         }
         return plugins;
     }

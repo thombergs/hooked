@@ -23,9 +23,9 @@ import java.util.Set;
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
-public class CollectorPluginNotifier {
+public class CollectorPluginVisitor {
 
-    private static Logger logger = LoggerFactory.getLogger(CollectorPluginNotifier.class);
+    private static Logger logger = LoggerFactory.getLogger(CollectorPluginVisitor.class);
 
     private final SvnCommitData data;
 
@@ -35,13 +35,13 @@ public class CollectorPluginNotifier {
 
     private List<FileMetrics> metrics = new ArrayList<>();
 
-    public CollectorPluginNotifier(SvnCommitData data, String repositoryRoot, Long revision) {
+    public CollectorPluginVisitor(SvnCommitData data, String repositoryRoot, Long revision) {
         this.data = data;
         this.repositoryRoot = repositoryRoot;
         this.revision = revision;
     }
 
-    public List<FileMetrics> notifyCollectorPlugins() {
+    public List<FileMetrics> visitCollectorPlugins() {
         try {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();
             List<CommittedFile> committedFiles = new ArrayList<>();
@@ -50,7 +50,7 @@ public class CollectorPluginNotifier {
                 lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
                 PipedInputStream in = new PipedInputStream(out);
                 committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), in));
-                notifyCollectorPlugins(committedFiles);
+                visitCollectorPlugins(committedFiles);
             }
             return metrics;
         } catch (SVNException | IOException e) {
@@ -58,7 +58,7 @@ public class CollectorPluginNotifier {
         }
     }
 
-    private List<FileMetrics> notifyCollectorPlugins(List<CommittedFile> committedFiles) {
+    private List<FileMetrics> visitCollectorPlugins(List<CommittedFile> committedFiles) {
         Set<CollectorPlugin> plugins = PluginRegistry.INSTANCE.getCollectorPlugins();
         for (CollectorPlugin plugin : plugins) {
             try {
