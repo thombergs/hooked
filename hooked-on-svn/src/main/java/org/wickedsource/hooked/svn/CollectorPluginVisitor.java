@@ -61,7 +61,7 @@ public class CollectorPluginVisitor {
             try {
                 metrics.join(plugin.analyzeCommittedFiles(committedFiles));
             } catch (Exception e) {
-                logger.error(String.format("Metrics of plugin %s could not be collected due to exception. Plugin was " +
+                logger.error(String.format("Metrics of plugin %s could not be collected due to exception. ParameterizedPlugin was " +
                         "skipped.", plugin.getClass()), e);
             }
         }

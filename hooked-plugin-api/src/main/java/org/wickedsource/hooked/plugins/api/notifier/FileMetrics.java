@@ -2,6 +2,7 @@ package org.wickedsource.hooked.plugins.api.notifier;
 
 import org.wickedsource.hooked.plugins.api.collector.Metric;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Set;
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
-public class FileMetrics {
+public class FileMetrics implements Serializable {
 
     private Map<String, Map<Metric, Long>> metrics = new HashMap<>();
 

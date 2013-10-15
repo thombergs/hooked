@@ -46,5 +46,4 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
         return metrics;
     }
 
-
 }

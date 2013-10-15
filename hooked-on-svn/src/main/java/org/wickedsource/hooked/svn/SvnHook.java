@@ -34,11 +34,22 @@ public class SvnHook {
         if (hook.repositoryRoot == null || hook.revision == null) {
             System.out.println("Missing command line parameter! See help below.");
             Help.help(hook.help.commandMetadata);
+            PluginParametersHelp.showHelp();
             return;
         }
 
         if (hook.help.showHelpIfRequested()) {
+            PluginParametersHelp.showHelp();
             return;
+        }
+
+        try {
+            PluginParametersCollector parameterCollector = new PluginParametersCollector();
+            parameterCollector.collectParameters();
+        } catch (MissingRequiredParameterException e) {
+            System.out.println(String.format("Missing system property -D%s for plugin %s.\n Either provide a value " +
+                    "for this property (see help below) or remove the plugin from the 'plugins' folder.",
+                    e.getParameterName(), e.getPlugin().getClass().getSimpleName()));
         }
 
         hook.run();

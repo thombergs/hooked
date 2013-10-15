@@ -1,9 +1,11 @@
 package org.wickedsource.hooked.plugins.api.collector;
 
+import java.io.Serializable;
+
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
-public final class Metric {
+public final class Metric implements Serializable{
 
     private final String id;
 
