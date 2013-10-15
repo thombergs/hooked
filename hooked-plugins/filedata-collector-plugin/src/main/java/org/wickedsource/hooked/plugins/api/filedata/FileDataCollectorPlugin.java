@@ -1,8 +1,8 @@
-package org.wickedsource.hooked.plugins.collector.filedata;
+package org.wickedsource.hooked.plugins.api.filedata;
 
-import org.wickedsource.hooked.plugins.collector.api.CollectorPlugin;
-import org.wickedsource.hooked.plugins.collector.api.CommittedFile;
-import org.wickedsource.hooked.plugins.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
+import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

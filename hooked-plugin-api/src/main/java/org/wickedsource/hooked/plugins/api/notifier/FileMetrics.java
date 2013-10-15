@@ -1,6 +1,6 @@
-package org.wickedsource.hooked.plugins.notifier;
+package org.wickedsource.hooked.plugins.api.notifier;
 
-import org.wickedsource.hooked.plugins.collector.api.Metric;
+import org.wickedsource.hooked.plugins.api.collector.Metric;
 
 import java.util.Collections;
 import java.util.HashMap;

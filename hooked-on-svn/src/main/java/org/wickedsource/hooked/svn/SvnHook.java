@@ -3,7 +3,7 @@ package org.wickedsource.hooked.svn;
 import io.airlift.command.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wickedsource.hooked.plugins.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
 import javax.inject.Inject;

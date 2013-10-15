@@ -1,12 +1,12 @@
-package org.wickedsource.hooked.plugins.collector.filedata;
+package org.wickedsource.hooked.plugins.api.filedata;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.wickedsource.hooked.plugins.collector.api.CommittedFile;
-import org.wickedsource.hooked.plugins.collector.api.FileMetaData;
-import org.wickedsource.hooked.plugins.collector.api.FileType;
-import org.wickedsource.hooked.plugins.collector.api.ModificationType;
-import org.wickedsource.hooked.plugins.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.api.collector.FileMetaData;
+import org.wickedsource.hooked.plugins.api.collector.FileType;
+import org.wickedsource.hooked.plugins.api.collector.ModificationType;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

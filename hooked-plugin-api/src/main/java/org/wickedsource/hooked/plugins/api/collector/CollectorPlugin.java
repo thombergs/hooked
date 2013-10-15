@@ -1,6 +1,6 @@
-package org.wickedsource.hooked.plugins.collector.api;
+package org.wickedsource.hooked.plugins.api.collector;
 
-import org.wickedsource.hooked.plugins.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.util.List;
 

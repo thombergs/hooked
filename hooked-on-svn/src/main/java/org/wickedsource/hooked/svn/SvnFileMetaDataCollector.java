@@ -4,8 +4,8 @@ import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNNodeKind;
 import org.tmatesoft.svn.core.wc.admin.ISVNChangeEntryHandler;
 import org.tmatesoft.svn.core.wc.admin.SVNChangeEntry;
-import org.wickedsource.hooked.plugins.collector.api.FileType;
-import org.wickedsource.hooked.plugins.collector.api.ModificationType;
+import org.wickedsource.hooked.plugins.api.collector.FileType;
+import org.wickedsource.hooked.plugins.api.collector.ModificationType;
 import org.wickedsource.hooked.svn.data.SvnFileMetaData;
 
 import java.util.ArrayList;

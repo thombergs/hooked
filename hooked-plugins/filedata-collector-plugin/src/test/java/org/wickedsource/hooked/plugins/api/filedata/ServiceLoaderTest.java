@@ -1,8 +1,8 @@
-package org.wickedsource.hooked.plugins.collector.filedata;
+package org.wickedsource.hooked.plugins.api.filedata;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.wickedsource.hooked.plugins.collector.api.CollectorPlugin;
+import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -15,10 +15,7 @@ public class ServiceLoaderTest {
     @Test
     public void test() {
         ServiceLoader<CollectorPlugin> loader = ServiceLoader.load(CollectorPlugin.class);
-
-        Iterator<CollectorPlugin> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            CollectorPlugin plugin = iterator.next();
+        for (CollectorPlugin plugin : loader) {
             Assert.assertEquals(FileDataCollectorPlugin.class, plugin.getClass());
         }
     }
