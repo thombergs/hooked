@@ -5,6 +5,7 @@ import org.wickedsource.hooked.plugins.collector.api.CommittedFile;
 import org.wickedsource.hooked.plugins.notifier.FileMetrics;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -31,7 +32,7 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
     private FileMetrics analyzeFile(CommittedFile file) throws IOException {
         String filename = file.getMetaData().getPath();
         FileDataMetrics metrics = new FileDataMetrics();
-        BufferedReader in = new BufferedReader(new InputStreamReader(file.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(file.getContent())));
         String line;
         while ((line = in.readLine()) != null) {
             metrics.addBytes(filename, (long) (line.length() + 1)); // +1 for newline

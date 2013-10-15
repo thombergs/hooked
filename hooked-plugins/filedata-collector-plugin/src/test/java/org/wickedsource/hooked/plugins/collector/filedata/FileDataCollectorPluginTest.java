@@ -8,6 +8,8 @@ import org.wickedsource.hooked.plugins.collector.api.FileType;
 import org.wickedsource.hooked.plugins.collector.api.ModificationType;
 import org.wickedsource.hooked.plugins.notifier.FileMetrics;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
@@ -24,8 +26,8 @@ public class FileDataCollectorPluginTest {
         metadata.setPath("testfile.txt");
         metadata.setModificationType(ModificationType.ADDED);
         metadata.setFileType(FileType.FILE);
-        InputStream in = getClass().getResourceAsStream("testfile.txt");
-        CommittedFile file = new CommittedFile(metadata, in);
+        byte[] content = readByteArrayFromClasspath("testfile.txt");
+        CommittedFile file = new CommittedFile(metadata, content);
         List<CommittedFile> fileList = Collections.singletonList(file);
 
         // when analyzing the file with our plugin
@@ -38,6 +40,22 @@ public class FileDataCollectorPluginTest {
         Assert.assertEquals(fileMetrics.get("testfile.txt", FileDataMetrics.EMPTY_LINES), Long.valueOf(2));
 
 
+    }
+
+    private byte[] readByteArrayFromClasspath(String path) {
+        try {
+            InputStream in = getClass().getResourceAsStream(path);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int b;
+            while ((b = in.read()) != -1) {
+                out.write(b);
+            }
+            in.close();
+            out.close();
+            return out.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

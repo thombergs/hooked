@@ -12,10 +12,8 @@ import org.wickedsource.hooked.plugins.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 import org.wickedsource.hooked.svn.data.SvnFileMetaData;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -46,19 +44,18 @@ public class CollectorPluginVisitor {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();
             List<CommittedFile> committedFiles = new ArrayList<>();
             for (SvnFileMetaData svnFile : data.getSvnFilesMetaData()) {
-                PipedOutputStream out = new PipedOutputStream();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
                 lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
-                PipedInputStream in = new PipedInputStream(out);
-                committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), in));
-                metrics = visitCollectorPlugins(committedFiles);
+                committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), out.toByteArray()));
             }
+            visitCollectorPlugins(committedFiles);
             return metrics;
-        } catch (SVNException | IOException e) {
+        } catch (SVNException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private FileMetrics visitCollectorPlugins(List<CommittedFile> committedFiles) {
+    private void visitCollectorPlugins(List<CommittedFile> committedFiles) {
         Set<CollectorPlugin> plugins = PluginRegistry.INSTANCE.getCollectorPlugins();
         for (CollectorPlugin plugin : plugins) {
             try {
@@ -68,7 +65,6 @@ public class CollectorPluginVisitor {
                         "skipped.", plugin.getClass()), e);
             }
         }
-        return metrics;
     }
 
     private FileMetaData mapFileMetaData(SvnFileMetaData svnFile) {
