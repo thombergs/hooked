@@ -1,6 +1,6 @@
 package org.wickedsource.hooked.svn;
 
-import org.wickedsource.hooked.plugins.api.params.ParameterizedPlugin;
+import org.wickedsource.hooked.plugins.filedata.params.ParameterizedPlugin;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>

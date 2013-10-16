@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.admin.SVNLookClient;
-import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
-import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
-import org.wickedsource.hooked.plugins.api.collector.FileMetaData;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.filedata.collector.CollectorPlugin;
+import org.wickedsource.hooked.plugins.filedata.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.filedata.collector.FileMetaData;
+import org.wickedsource.hooked.plugins.filedata.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 import org.wickedsource.hooked.svn.data.SvnFileMetaData;
 

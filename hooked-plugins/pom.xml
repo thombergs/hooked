@@ -16,6 +16,7 @@
 
     <modules>
         <module>filedata-collector-plugin</module>
+        <module>webhook-notifier-plugin</module>
     </modules>
 
 

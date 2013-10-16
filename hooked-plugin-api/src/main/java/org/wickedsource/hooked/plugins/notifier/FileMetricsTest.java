@@ -2,8 +2,8 @@ package org.wickedsource.hooked.plugins.notifier;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.wickedsource.hooked.plugins.api.collector.Metric;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.filedata.collector.Metric;
+import org.wickedsource.hooked.plugins.filedata.notifier.FileMetrics;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>

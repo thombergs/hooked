@@ -1,7 +1,7 @@
 package org.wickedsource.hooked.svn;
 
-import org.wickedsource.hooked.plugins.api.params.ParameterizedPlugin;
-import org.wickedsource.hooked.plugins.api.params.PluginParameter;
+import org.wickedsource.hooked.plugins.filedata.params.ParameterizedPlugin;
+import org.wickedsource.hooked.plugins.filedata.params.PluginParameter;
 
 import java.util.Set;
 
