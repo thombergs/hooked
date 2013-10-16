@@ -7,8 +7,6 @@ import java.util.List;
  */
 public interface ParameterizedPlugin {
 
-    public List<? extends PluginParameter> getRequiredParameters();
-
-    public List<? extends PluginParameter> getOptionalParameters();
+    public List<? extends PluginParameter> getParameters();
 
 }

@@ -9,16 +9,27 @@ public abstract class PluginParameter<T> {
 
     private final String description;
 
+    private final boolean required;
+
     private T value;
 
     public PluginParameter(String name, String description) {
         this.name = name;
         this.description = description;
+        this.required = false;
     }
 
     public PluginParameter(String name, String description, T value) {
         this.name = name;
         this.description = description;
+        this.value = value;
+        this.required = false;
+    }
+
+    protected PluginParameter(String name, String description, T value, boolean required) {
+        this.name = name;
+        this.description = description;
+        this.required = required;
         this.value = value;
     }
 
@@ -39,4 +50,8 @@ public abstract class PluginParameter<T> {
     }
 
     public abstract T fromString(String stringValue);
+
+    public boolean isRequired() {
+        return required;
+    }
 }

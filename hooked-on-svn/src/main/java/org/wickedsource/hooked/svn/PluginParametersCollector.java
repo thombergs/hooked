@@ -14,22 +14,13 @@ public class PluginParametersCollector {
     public void collectParameters() throws MissingRequiredParameterException {
         Set<ParameterizedPlugin> plugins = PluginRegistry.INSTANCE.getParameterizedPlugins();
         for (ParameterizedPlugin plugin : plugins) {
-
-            for (PluginParameter requiredParameter : plugin.getRequiredParameters()) {
+            for (PluginParameter requiredParameter : plugin.getParameters()) {
                 String propertyName = getSystemPropertyName(plugin, requiredParameter);
                 String propertyValue = System.getProperty(propertyName);
-                if (propertyValue == null) {
+                if (requiredParameter.isRequired() && propertyValue == null) {
                     throw new MissingRequiredParameterException(plugin, propertyName);
                 } else {
                     requiredParameter.setValue(requiredParameter.fromString(propertyValue));
-                }
-            }
-
-            for (PluginParameter optionalParameter : plugin.getOptionalParameters()) {
-                String propertyName = getSystemPropertyName(plugin, optionalParameter);
-                String propertyValue = System.getProperty(propertyName);
-                if (propertyValue != null) {
-                    optionalParameter.setValue(optionalParameter.fromString(propertyValue));
                 }
             }
         }
