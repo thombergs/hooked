@@ -12,22 +12,17 @@ set CMD_LINE_ARGS=
 set PLUGINS_PATH=%HOOKED_ON_SVN_HOME%/plugins
 set LIB_PATH=%HOOKED_ON_SVN_HOME%/lib
 set BIN_PATH=%HOOKED_ON_SVN_HOME%/bin
+set LOG_PATH=%HOOKED_ON_SVN_HOME%/log
 set CLASSPATH=%LIB_PATH%/*;%PLUGINS_PATH%/*;
+set EXECUTABLE_PATH=%BIN_PATH%/svnhook.bat
 set MAIN_CLASS=org.wickedsource.hooked.svn.SvnHook
 
-call %BIN_PATH%/config.bat
-
-echo using classpath %CLASSPATH%
-
-if exist %JAR_PATH% goto jarFound
-echo JAR not found at %JAR_PATH%!
+if exist %EXECUTABLE_PATH% goto batFound
 echo The environment variable HOOKED_ON_SVN_HOME is not defined correctly.
 echo Please point this variable to the path where you installed the SVN Hook.
 goto end
 
-:jarFound
-echo Found JAR at %JAR_PATH%.
-echo Using plugins found at %PLUGINS_PATH%.
+:batFound
 goto setArgs
 
 :setArgs
@@ -38,6 +33,6 @@ goto setArgs
 
 :doneSetArgs
 cd %HOOKED_ON_SVN_HOME%
-java -classpath "%CLASSPATH%" %MAIN_CLASS% %CMD_LINE_ARGS%
+java -classpath "%CLASSPATH%" %MAIN_CLASS% %CMD_LINE_ARGS% > %LOG_PATH%/svnhook.log
 
 :end
