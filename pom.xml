@@ -12,6 +12,7 @@
         <module>hooked-on-svn</module>
         <module>hooked-plugin-api</module>
         <module>hooked-plugins</module>
+        <module>dummy-http-server</module>
     </modules>
 
     <build>
