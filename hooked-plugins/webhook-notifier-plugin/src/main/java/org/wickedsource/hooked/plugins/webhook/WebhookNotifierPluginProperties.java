@@ -13,16 +13,13 @@ public class WebhookNotifierPluginProperties {
 
     private Properties properties;
 
-    public WebhookNotifierPluginProperties(Properties p){
+    public WebhookNotifierPluginProperties(Properties p) {
         this.properties = p;
     }
 
-    public List<WebHookParameters> getWebHookParameters(){
-        String urlsString = properties.getProperty(PROPERTY_URLS);
-        List<String> urls = Arrays.asList(urlsString.split(","));
-
-        String parametersString = properties.getProperty(PROPERTY_PARAMETER_NAMES);
-        List<String> parameters = Arrays.asList(parametersString.split(","));
+    public List<WebHookParameters> getWebHookParameters() {
+        List<String> urls = getUrlsFromProperties();
+        List<String> parameters = getParameterNamedFromProperties();
 
         Iterator<String> urlIterator = urls.iterator();
         Iterator<String> paramIterator = parameters.iterator();
@@ -38,5 +35,25 @@ public class WebhookNotifierPluginProperties {
             resultList.add(params);
         }
         return resultList;
+    }
+
+    private List<String> getParameterNamedFromProperties() {
+        String parametersString = properties.getProperty(PROPERTY_PARAMETER_NAMES);
+        List<String> parameters;
+        if (parametersString != null) {
+            parameters = Arrays.asList(parametersString.split(","));
+        } else {
+            parameters = new ArrayList<>();
+        } return parameters;
+    }
+
+    private List<String> getUrlsFromProperties() {
+        String urlsString = properties.getProperty(PROPERTY_URLS);
+        List<String> urls;
+        if (urlsString != null) {
+            urls = Arrays.asList(urlsString.split(","));
+        } else {
+            urls = new ArrayList<>();
+        } return urls;
     }
 }
