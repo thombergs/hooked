@@ -59,7 +59,7 @@ public enum PluginRegistry {
                 plugins.add(plugin);
             }
             this.notifierPlugins = plugins;
-            logLoadedPlugins(this.collectorPlugins);
+            logLoadedPlugins(this.notifierPlugins);
         }
         return this.notifierPlugins;
     }
