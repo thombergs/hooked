@@ -35,7 +35,7 @@ public enum PluginRegistry {
     public synchronized Set<CollectorPlugin> getCollectorPlugins() {
         if (this.collectorPlugins == null) {
             if(logger.isDebugEnabled()){
-                logger.trace("Loading collector plugins...");
+                logger.debug("Loading collector plugins...");
             }
             ServiceLoader<CollectorPlugin> loader = ServiceLoader.load(CollectorPlugin.class);
             Set<CollectorPlugin> plugins = new HashSet<>();
@@ -53,7 +53,7 @@ public enum PluginRegistry {
     public synchronized Set<NotifierPlugin> getNotifierPlugins() {
         if (this.notifierPlugins == null) {
             if(logger.isDebugEnabled()){
-                logger.trace("Loading notifier plugins...");
+                logger.debug("Loading notifier plugins...");
             }
             ServiceLoader<NotifierPlugin> loader = ServiceLoader.load(NotifierPlugin.class);
             Set<NotifierPlugin> plugins = new HashSet<>();
