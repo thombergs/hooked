@@ -2,7 +2,7 @@ package org.wickedsource.hooked.svn;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wickedsource.hooked.plugins.filedata.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
 /**

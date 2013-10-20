@@ -1,7 +1,7 @@
-package org.wickedsource.hooked.plugins.filedata;
+package org.wickedsource.hooked.plugins.api;
 
-import org.wickedsource.hooked.plugins.filedata.collector.Metric;
-import org.wickedsource.hooked.plugins.filedata.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.collector.Metric;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>

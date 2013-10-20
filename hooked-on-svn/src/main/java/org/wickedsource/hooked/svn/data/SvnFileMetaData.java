@@ -1,7 +1,7 @@
 package org.wickedsource.hooked.svn.data;
 
-import org.wickedsource.hooked.plugins.filedata.collector.FileType;
-import org.wickedsource.hooked.plugins.filedata.collector.ModificationType;
+import org.wickedsource.hooked.plugins.api.collector.FileType;
+import org.wickedsource.hooked.plugins.api.collector.ModificationType;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>

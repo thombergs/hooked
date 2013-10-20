@@ -1,7 +1,7 @@
 package org.wickedsource.hooked.plugins.webhook;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.wickedsource.hooked.plugins.filedata.notifier.CommitData;
+import org.wickedsource.hooked.plugins.api.notifier.CommitData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

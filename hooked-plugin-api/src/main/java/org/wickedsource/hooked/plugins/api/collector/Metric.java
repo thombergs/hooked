@@ -1,4 +1,4 @@
-package org.wickedsource.hooked.plugins.filedata.collector;
+package org.wickedsource.hooked.plugins.api.collector;
 
 import java.io.Serializable;
 

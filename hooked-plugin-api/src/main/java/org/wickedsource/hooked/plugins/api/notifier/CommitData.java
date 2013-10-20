@@ -1,4 +1,4 @@
-package org.wickedsource.hooked.plugins.filedata.notifier;
+package org.wickedsource.hooked.plugins.api.notifier;
 
 import java.io.Serializable;
 

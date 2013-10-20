@@ -1,14 +1,15 @@
-package org.wickedsource.hooked.plugins.filedata;
+package org.wickedsource.hooked.plugins.api;
 
-import org.wickedsource.hooked.plugins.filedata.collector.CollectorPlugin;
-import org.wickedsource.hooked.plugins.filedata.collector.CommittedFile;
-import org.wickedsource.hooked.plugins.filedata.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
+import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
@@ -46,4 +47,8 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
         return metrics;
     }
 
+    @Override
+    public void init(Properties properties) {
+        // nothing to do, since we don't need any external parameters
+    }
 }

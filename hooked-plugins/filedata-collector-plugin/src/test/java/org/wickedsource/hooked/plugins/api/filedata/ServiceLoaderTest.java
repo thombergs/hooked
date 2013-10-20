@@ -1,9 +1,9 @@
-package org.wickedsource.hooked.plugins.filedata.filedata;
+package org.wickedsource.hooked.plugins.api.filedata;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.wickedsource.hooked.plugins.filedata.FileDataCollectorPlugin;
-import org.wickedsource.hooked.plugins.filedata.collector.CollectorPlugin;
+import org.wickedsource.hooked.plugins.api.FileDataCollectorPlugin;
+import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
 
 import java.util.ServiceLoader;
 

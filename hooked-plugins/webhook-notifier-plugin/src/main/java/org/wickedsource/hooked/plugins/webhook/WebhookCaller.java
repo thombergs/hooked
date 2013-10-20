@@ -20,25 +20,24 @@ public class WebhookCaller {
     /**
      * Sends a JSON formatted String to a given URL via POST.
      *
-     * @param url           the URL of the webhook to send the payload to
-     * @param parameterName the name of the parameter which should include the payload
+     * @param params the parameters for this webhook caller
      * @param jsonPayload   the JSON payload
      */
-    public void callWebhook(String url, String parameterName, String jsonPayload) {
+    public void callWebhook(WebHookParameters params, String jsonPayload) {
         try {
             CloseableHttpClient client = HttpClients.createDefault();
-            HttpPost post = new HttpPost(url);
+            HttpPost post = new HttpPost(params.getUrl());
             post.setConfig(getRequestConfig());
-            List<NameValuePair> params = new ArrayList<>();
-            params.add(new BasicNameValuePair(parameterName, jsonPayload));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, Consts.UTF_8);
+            List<NameValuePair> httpParams = new ArrayList<>();
+            httpParams.add(new BasicNameValuePair(params.getPayloadParameterName(), jsonPayload));
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(httpParams, Consts.UTF_8);
             post.setEntity(entity);
             CloseableHttpResponse response = client.execute(post);
             response.close();
             client.close();
         } catch (IOException e) {
             throw new RuntimeException(String.format("Error trying to send JSON payload to webhook at URL '%s'!",
-                    url), e);
+                    params.getUrl()), e);
         }
     }
 

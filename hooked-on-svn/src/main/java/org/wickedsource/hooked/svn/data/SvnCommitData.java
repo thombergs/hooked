@@ -1,6 +1,6 @@
 package org.wickedsource.hooked.svn.data;
 
-import org.wickedsource.hooked.plugins.filedata.notifier.VCSSpecificCommitData;
+import org.wickedsource.hooked.plugins.api.notifier.VCSSpecificCommitData;
 
 import java.util.Date;
 import java.util.List;

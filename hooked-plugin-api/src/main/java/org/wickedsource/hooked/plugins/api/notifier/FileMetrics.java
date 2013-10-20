@@ -1,6 +1,6 @@
-package org.wickedsource.hooked.plugins.filedata.notifier;
+package org.wickedsource.hooked.plugins.api.notifier;
 
-import org.wickedsource.hooked.plugins.filedata.collector.Metric;
+import org.wickedsource.hooked.plugins.api.collector.Metric;
 
 import java.io.Serializable;
 import java.util.Collections;
