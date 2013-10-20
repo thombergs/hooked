@@ -46,7 +46,7 @@ public class CollectorPluginVisitor {
             List<CommittedFile> committedFiles = new ArrayList<>();
             for (SvnFileMetaData svnFile : data.getSvnFilesMetaData()) {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                if(svnFile.getFileType() == FileType.FILE){
+                if (svnFile.getFileType() == FileType.FILE) {
                     lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
                 }
                 committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), out.toByteArray()));
@@ -64,8 +64,7 @@ public class CollectorPluginVisitor {
             try {
                 metrics.join(plugin.analyzeCommittedFiles(committedFiles));
             } catch (Exception e) {
-                logger.error("Collector" +
-                        " plugin %s could did not execute normally. Skipped plugin execution.",
+                logger.error("Collector plugin %s could did not execute normally. Skipped plugin execution.",
                         plugin.getClass());
             }
         }
