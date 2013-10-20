@@ -33,7 +33,7 @@ public class WebhookNotifierPlugin implements NotifierPlugin {
         }
 
         for (WebHookParameters params : webhookParams) {
-            logger.debug(String.format("Sending json to URL %s", params.getUrl()));
+            logger.debug(String.format("Sending JSON data to URL %s", params.getUrl()));
             caller.callWebhook(params, json);
         }
 
