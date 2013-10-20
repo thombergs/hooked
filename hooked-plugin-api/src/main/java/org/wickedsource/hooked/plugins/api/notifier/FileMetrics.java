@@ -43,7 +43,12 @@ public class FileMetrics implements Serializable {
     public Long get(String filename, Metric metric) {
         Map<Metric, Long> metricValues = metrics.get(filename);
         if (metricValues != null) {
-            return metricValues.get(metric);
+            Long value =  metricValues.get(metric);
+            if(value == null){
+                return 0L;
+            }else{
+                return value;
+            }
         } else {
             return 0L;
         }

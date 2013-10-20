@@ -2,6 +2,7 @@ package org.wickedsource.hooked.plugins.api;
 
 import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
 import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.api.collector.ModificationType;
 import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.io.BufferedReader;
@@ -31,22 +32,44 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
     }
 
     private FileMetrics analyzeFile(CommittedFile file) throws IOException {
+
         String filename = file.getMetaData().getPath();
         FileDataMetrics metrics = new FileDataMetrics();
         BufferedReader in = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(file.getContent())));
         String line;
         while ((line = in.readLine()) != null) {
-            metrics.addBytes(filename, (long) (line.length() + 1)); // +1 for newline
-            metrics.addLines(filename, 1l);
-            if ("".equals(line.trim())) {
-                metrics.addEmptyLines(filename, 1l);
+            if (file.getMetaData().getModificationType() == ModificationType.DELETED) {
+                getDeletedMetrics(filename, metrics, line);
+            } else {
+                getAddedMetrics(filename, metrics, line);
             }
         }
+
         // correction since the last line does not contain a newline character
-        if (metrics.getBytes(filename) > 0) {
+        if (metrics.getBytes(filename) != 0) {
             metrics.addBytes(filename, (long) -1);
         }
+        if (metrics.getBytesDeleted(filename) != 0) {
+            metrics.addBytesDeleted(filename, (long) -1);
+        }
+
         return metrics;
+    }
+
+    private void getAddedMetrics(String filename, FileDataMetrics metrics, String line) {
+        metrics.addBytes(filename, (long) (line.length() + 1)); // +1 for newline
+        metrics.addLines(filename, 1l);
+        if ("".equals(line.trim())) {
+            metrics.addEmptyLines(filename, 1l);
+        }
+    }
+
+    private void getDeletedMetrics(String filename, FileDataMetrics metrics, String line) {
+        metrics.addBytesDeleted(filename, (long) (line.length() + 1)); // +1 for newline
+        metrics.addLinesDeleted(filename, 1l);
+        if ("".equals(line.trim())) {
+            metrics.addEmptyLinesDeleted(filename, 1l);
+        }
     }
 
     @Override
