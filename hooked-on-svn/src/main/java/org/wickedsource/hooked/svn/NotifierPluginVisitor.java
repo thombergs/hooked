@@ -21,7 +21,7 @@ public class NotifierPluginVisitor {
                 plugin.notify(data);
             } catch (Exception e) {
                 logger.error(String.format("Notifier plugin %s did not execute normally. Skipped plugin execution.",
-                        plugin.getClass()));
+                        plugin.getClass()), e);
             }
         }
     }

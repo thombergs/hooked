@@ -65,7 +65,7 @@ public class CollectorPluginVisitor {
                 metrics.join(plugin.analyzeCommittedFiles(committedFiles));
             } catch (Exception e) {
                 logger.error(String.format("Collector plugin %s did not execute normally. Skipped plugin execution.",
-                        plugin.getClass()));
+                        plugin.getClass()), e);
             }
         }
     }
