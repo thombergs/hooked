@@ -3,7 +3,7 @@
 REM 1. Set the environment variable %HOOKED_ON_SVN_HOME% to the path where you
 REM    installed the hooked-on-svn distributable.
 
-REM 2. Create a script named "post-commit.bat" in the hooks folder of your SVN repository
+REM 2. Create a script named "post-commit.bat" in the hooks folder of your SVN repositoryUrl
 REM    with the following line:
 REM    call %HOOKED_ON_SVN_HOME%/bin/svnhook.bat
 
@@ -26,6 +26,7 @@ goto end
 :javaOpts
 set JAVA_OPTS=
 set JAVA_OPTS=%JAVA_OPTS% -Dlogback.configurationFile=%CONF_PATH%/logback.xml
+set JAVA_OPTS=%JAVA_OPTS% -Dhooked.configPath=%CONF_PATH%
 
 :setArgs
 if ""%1""=="""" goto doneSetArgs

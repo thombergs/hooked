@@ -79,4 +79,8 @@ public class FileMetrics implements Serializable {
             }
         }
     }
+
+    public int getFileCount(){
+        return metrics.size();
+    }
 }

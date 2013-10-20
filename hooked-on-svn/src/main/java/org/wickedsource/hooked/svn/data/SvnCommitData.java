@@ -20,6 +20,16 @@ public class SvnCommitData implements VCSSpecificCommitData {
 
     private List<SvnFileMetaData> svnFileMetaData;
 
+    private String repositoryUrl;
+
+    public String getRepositoryUrl() {
+        return repositoryUrl;
+    }
+
+    public void setRepositoryUrl(String repositoryUrl) {
+        this.repositoryUrl = repositoryUrl;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -50,5 +60,14 @@ public class SvnCommitData implements VCSSpecificCommitData {
 
     public void setSvnFilesMetaData(List<SvnFileMetaData> svnFileMetaData) {
         this.svnFileMetaData = svnFileMetaData;
+    }
+
+    @Override
+    public String toString() {
+        return "SvnCommitData{" +
+                "author='" + author + '\'' +
+                ", timestamp=" + timestamp +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

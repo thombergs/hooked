@@ -2,6 +2,7 @@ package org.wickedsource.hooked.svn;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wickedsource.hooked.plugins.api.notifier.CommitData;
 import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
@@ -52,14 +53,31 @@ public class SvnHook {
     public void run() {
         try {
             SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revisionNumber);
-            SvnCommitData data = collector.collectCommitData();
+            SvnCommitData svnData = collector.collectCommitData();
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Successfully collected SVN specific commit data: %s", svnData));
+            }
 
-            CollectorPluginVisitor collectorPluginVisitor = new CollectorPluginVisitor(data, repositoryRoot,
+            CollectorPluginVisitor collectorPluginVisitor = new CollectorPluginVisitor(svnData, repositoryRoot,
                     revisionNumber);
             FileMetrics metrics = collectorPluginVisitor.visitCollectorPlugins();
+            if (logger.isDebugEnabled()) {
+                logger.debug(String.format("Successfully collected data on %d files from collector plugins",
+                        metrics.getFileCount()));
+            }
 
-            // TODO: send data to all notifier plugins
-            logger.info(String.format("Successfully collected svn commit data: %s", data));
+            CommitData commitData = new CommitData();
+            commitData.setVcsSpecificData(svnData);
+            commitData.setFileMetrics(metrics);
+
+            NotifierPluginVisitor notifierPluginVisitor = new NotifierPluginVisitor();
+            notifierPluginVisitor.visitNotifierPlugins(commitData);
+            if (logger.isDebugEnabled()) {
+                logger.debug("Successfully distributed data to notifier plugins");
+            }
+
+            logger.info(String.format("Successfully processed commit on repository %s by user '%s'",
+                    svnData.getRepositoryUrl(), svnData.getAuthor()));
         } catch (Exception e) {
             logger.error("Exception while collecting svn commit data!", e);
         }
