@@ -26,7 +26,7 @@ public enum PluginRegistry {
 
     private PluginPropertiesLoader pluginPropertiesLoader = new PluginPropertiesLoader();
 
-    private PluginRegistry(){
+    private PluginRegistry() {
         logger = LoggerFactory.getLogger(PluginRegistry.class);
         getCollectorPlugins();
         getNotifierPlugins();
@@ -34,9 +34,7 @@ public enum PluginRegistry {
 
     public synchronized Set<CollectorPlugin> getCollectorPlugins() {
         if (this.collectorPlugins == null) {
-            if(logger.isDebugEnabled()){
-                logger.debug("Loading collector plugins...");
-            }
+            logger.debug("Loading collector plugins...");
             ServiceLoader<CollectorPlugin> loader = ServiceLoader.load(CollectorPlugin.class);
             Set<CollectorPlugin> plugins = new HashSet<>();
             for (CollectorPlugin plugin : loader) {
@@ -52,9 +50,7 @@ public enum PluginRegistry {
 
     public synchronized Set<NotifierPlugin> getNotifierPlugins() {
         if (this.notifierPlugins == null) {
-            if(logger.isDebugEnabled()){
-                logger.debug("Loading notifier plugins...");
-            }
+            logger.debug("Loading notifier plugins...");
             ServiceLoader<NotifierPlugin> loader = ServiceLoader.load(NotifierPlugin.class);
             Set<NotifierPlugin> plugins = new HashSet<>();
             for (NotifierPlugin plugin : loader) {
@@ -69,11 +65,9 @@ public enum PluginRegistry {
     }
 
     private void logLoadedPlugins(Set<? extends Plugin> plugins) {
-        if (logger.isDebugEnabled()) {
-            logger.debug(String.format("Loaded %d plugin(s):", plugins.size()));
-            for (Plugin plugin : plugins) {
-                logger.trace(plugin.getClass().getName());
-            }
+        logger.debug(String.format("Loaded %d plugin(s):", plugins.size()));
+        for (Plugin plugin : plugins) {
+            logger.trace(plugin.getClass().getName());
         }
     }
 

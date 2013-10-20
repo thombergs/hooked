@@ -54,17 +54,13 @@ public class SvnHook {
         try {
             SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revisionNumber);
             SvnCommitData svnData = collector.collectCommitData();
-            if (logger.isDebugEnabled()) {
-                logger.debug(String.format("Successfully collected SVN specific commit data: %s", svnData));
-            }
+            logger.debug(String.format("Successfully collected SVN specific commit data: %s", svnData));
 
             CollectorPluginVisitor collectorPluginVisitor = new CollectorPluginVisitor(svnData, repositoryRoot,
                     revisionNumber);
             FileMetrics metrics = collectorPluginVisitor.visitCollectorPlugins();
-            if (logger.isDebugEnabled()) {
-                logger.debug(String.format("Successfully collected data on %d files from collector plugins",
-                        metrics.getFileCount()));
-            }
+            logger.debug(String.format("Successfully collected data on %d files from collector plugins",
+                    metrics.getFileCount()));
 
             CommitData commitData = new CommitData();
             commitData.setVcsSpecificData(svnData);
@@ -72,9 +68,7 @@ public class SvnHook {
 
             NotifierPluginVisitor notifierPluginVisitor = new NotifierPluginVisitor();
             notifierPluginVisitor.visitNotifierPlugins(commitData);
-            if (logger.isDebugEnabled()) {
-                logger.debug("Successfully distributed data to notifier plugins");
-            }
+            logger.debug("Successfully distributed data to notifier plugins");
 
             logger.info(String.format("Successfully processed commit on repository %s by user '%s'",
                     svnData.getRepositoryUrl(), svnData.getAuthor()));
