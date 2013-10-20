@@ -19,8 +19,8 @@ public class WebhookNotifierPlugin implements NotifierPlugin {
 
     @Override
     public void notify(CommitData data) {
-        JsonMapper mapper = new JsonMapper();
-        String json = mapper.mapToJson(data);
+        JsonMapper jsonMapper = new JsonMapper();
+        String json = jsonMapper.mapToJson(data);
         logger.debug(String.format("Converted commit data to JSON: %s", json));
 
         WebhookCaller caller = new WebhookCaller();

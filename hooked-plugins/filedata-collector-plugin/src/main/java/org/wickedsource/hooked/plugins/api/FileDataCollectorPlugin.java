@@ -43,7 +43,9 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
             }
         }
         // correction since the last line does not contain a newline character
-        metrics.addBytes(filename, (long) -1);
+        if (metrics.getBytes(filename) > 0) {
+            metrics.addBytes(filename, (long) -1);
+        }
         return metrics;
     }
 

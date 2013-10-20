@@ -24,4 +24,16 @@ public class FileDataMetrics extends FileMetrics {
         add(filename, EMPTY_LINES, value);
     }
 
+    public long getBytes(String filename){
+        return get(filename, BYTES);
+    }
+
+    public long getLines(String filename){
+        return get(filename, LINES);
+    }
+
+    public long getEmptyLines(String filename){
+        return get(filename, EMPTY_LINES);
+    }
+
 }
