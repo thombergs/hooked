@@ -20,7 +20,7 @@ public class NotifierPluginVisitor {
             try {
                 plugin.notify(data);
             } catch (Exception e) {
-                logger.error("Notifier plugin %s could did not execute normally. Skipped plugin execution.",
+                logger.error("Notifier plugin %s did not execute normally. Skipped plugin execution.",
                         plugin.getClass());
             }
         }
