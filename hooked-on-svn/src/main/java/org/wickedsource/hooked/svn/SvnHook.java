@@ -17,28 +17,32 @@ public class SvnHook {
 
     private Long revisionNumber;
 
+    private String repositoryUrl;
+
     public static void main(String... args) {
         SvnHook hook = createSvnHook(args);
         hook.run();
     }
 
-    public SvnHook(String repositoryRoot, Long revisionNumber) {
+    public SvnHook(String repositoryRoot, Long revisionNumber, String repositoryUrl) {
         this.repositoryRoot = repositoryRoot;
         this.revisionNumber = revisionNumber;
+        this.repositoryUrl = repositoryUrl;
     }
 
     /**
      * Creates a fresh SvnHook object from input parameters.
      */
     private static SvnHook createSvnHook(String[] args) {
-        if (args.length != 2) {
-            logger.error("SvnHook has been called with the wrong number of parameters! Should be called with path to " +
-                    "local SVN repository as first parameter and SVN revision number as second parameter!");
+        if (args.length != 3) {
+            logger.error("SvnHook has been called with the wrong number of parameters! Expecting 1) path to SVN repo " +
+                    "in local filesystem 2) revision number of checking 3) URL of the SVN repo");
             System.exit(-1);
         }
 
         String repositoryRoot = args[0];
         String revisionString = args[1];
+        String repositoryUrl = args[2];
         Long revisionNumber = null;
         try {
             revisionNumber = Long.valueOf(revisionString);
@@ -47,12 +51,12 @@ public class SvnHook {
             System.exit(-2);
         }
 
-        return new SvnHook(repositoryRoot, revisionNumber);
+        return new SvnHook(repositoryRoot, revisionNumber, repositoryUrl);
     }
 
     public void run() {
         try {
-            SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revisionNumber);
+            SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revisionNumber, repositoryUrl);
             SvnCommitData svnData = collector.collectCommitData();
             logger.debug(String.format("Successfully collected SVN specific commit data: %s", svnData));
 

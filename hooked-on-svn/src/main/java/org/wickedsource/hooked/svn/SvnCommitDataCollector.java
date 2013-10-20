@@ -4,9 +4,7 @@ import org.pojava.datetime.DateTime;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNProperties;
 import org.tmatesoft.svn.core.SVNRevisionProperty;
-import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNRevision;
-import org.tmatesoft.svn.core.wc.SVNWCClient;
 import org.tmatesoft.svn.core.wc.admin.SVNLookClient;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
@@ -20,8 +18,10 @@ public class SvnCommitDataCollector {
     private File repositoryRoot;
 
     private SVNRevision svnRevision;
+    private String repositoryUrl;
 
-    public SvnCommitDataCollector(String repositoryRoot, Long svnRevision) {
+    public SvnCommitDataCollector(String repositoryRoot, Long svnRevision, String repositoryUrl) {
+        this.repositoryUrl = repositoryUrl;
         this.repositoryRoot = new File(repositoryRoot);
         this.svnRevision = SVNRevision.create(svnRevision);
     }
@@ -53,7 +53,7 @@ public class SvnCommitDataCollector {
         String dateString = revisionProperties.getStringValue(SVNRevisionProperty.DATE);
         DateTime dateTime = DateTime.parse(dateString);
         data.setTimestamp(dateTime.toDate());
-        data.setRepositoryUrl(repositoryRoot.getAbsolutePath());
+        data.setRepositoryUrl(repositoryUrl);
     }
 
 }
