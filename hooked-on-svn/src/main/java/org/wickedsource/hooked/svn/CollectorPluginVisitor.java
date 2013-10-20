@@ -8,6 +8,7 @@ import org.tmatesoft.svn.core.wc.admin.SVNLookClient;
 import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
 import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
 import org.wickedsource.hooked.plugins.api.collector.FileMetaData;
+import org.wickedsource.hooked.plugins.api.collector.FileType;
 import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 import org.wickedsource.hooked.svn.data.SvnFileMetaData;
@@ -45,7 +46,9 @@ public class CollectorPluginVisitor {
             List<CommittedFile> committedFiles = new ArrayList<>();
             for (SvnFileMetaData svnFile : data.getSvnFilesMetaData()) {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
+                if(svnFile.getFileType() == FileType.FILE){
+                    lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(), SVNRevision.create(revision), out);
+                }
                 committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), out.toByteArray()));
             }
             visitCollectorPlugins(committedFiles);

@@ -24,12 +24,12 @@ public class PluginPropertiesLoader {
         }
 
         String configPath = getConfigPath();
-        String propertyFileName = configPath + File.pathSeparator + pluginClass.getSimpleName();
+        String propertyFileName = configPath + File.separator + pluginClass.getSimpleName();
 
         File propertyFile = new File(propertyFileName);
         if (!propertyFile.exists()) {
             if (logger.isTraceEnabled()) {
-                logger.trace(String.format("Property file %s not found. Configuring plugin &s with empty properties" +
+                logger.trace(String.format("Property file %s not found. Configuring plugin %s with empty properties" +
                         ".", propertyFile.getAbsolutePath(), pluginClass.getSimpleName()));
             }
             return new Properties();
