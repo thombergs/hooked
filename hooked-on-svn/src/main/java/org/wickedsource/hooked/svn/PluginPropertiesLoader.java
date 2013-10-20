@@ -24,7 +24,7 @@ public class PluginPropertiesLoader {
         }
 
         String configPath = getConfigPath();
-        String propertyFileName = configPath + File.separator + pluginClass.getSimpleName();
+        String propertyFileName = configPath + File.separator + pluginClass.getSimpleName() + ".properties";
 
         File propertyFile = new File(propertyFileName);
         if (!propertyFile.exists()) {
