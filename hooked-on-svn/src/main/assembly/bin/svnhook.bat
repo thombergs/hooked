@@ -5,7 +5,7 @@ REM    installed the hooked-on-svn distributable.
 
 REM 2. Create a script named "post-commit.bat" in the hooks folder of your SVN repositoryUrl
 REM    with the following line:
-REM    call %HOOKED_ON_SVN_HOME%/bin/svnhook.bat
+REM    call %HOOKED_ON_SVN_HOME%/bin/svnhook.bat %1 %2 <URL_OF_YOUR_REPOSITORY>
 
 set CMD_LINE_ARGS=
 
