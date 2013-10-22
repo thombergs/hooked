@@ -132,4 +132,15 @@ public class FileMetrics implements Serializable {
     public final int getFileCount() {
         return metrics.size();
     }
+
+    /**
+     * Adds a new file with empty metrics to the data structure if it does not exist yet.
+     *
+     * @param filename the name of the file.
+     */
+    public void addFile(String filename) {
+        if (metrics.get(filename) == null) {
+            this.metrics.put(filename, new HashMap<Metric, Long>());
+        }
+    }
 }

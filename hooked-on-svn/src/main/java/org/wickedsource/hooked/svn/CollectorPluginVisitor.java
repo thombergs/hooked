@@ -45,6 +45,7 @@ public class CollectorPluginVisitor {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();
             List<CommittedItem> committedItems = new ArrayList<>();
             for (SvnFileMetaData svnFile : data.getSvnFilesMetaData()) {
+                metrics.addFile(svnFile.getFilePath());
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                 // if file was deleted, we have to analyze the previous revision
