@@ -6,7 +6,7 @@ import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.admin.SVNLookClient;
 import org.wickedsource.hooked.plugins.api.collector.*;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 import org.wickedsource.hooked.svn.data.SvnFileMetaData;
 
@@ -43,7 +43,7 @@ public class CollectorPluginVisitor {
     public FileMetrics visitCollectorPlugins() {
         try {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();
-            List<CommittedFile> committedFiles = new ArrayList<>();
+            List<CommittedItem> committedItems = new ArrayList<>();
             for (SvnFileMetaData svnFile : data.getSvnFilesMetaData()) {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -57,20 +57,20 @@ public class CollectorPluginVisitor {
                     lookClient.doCat(new File(repositoryRoot), svnFile.getFilePath(),
                             SVNRevision.create(revisionToAnalyze), out);
                 }
-                committedFiles.add(new CommittedFile(mapFileMetaData(svnFile), out.toByteArray()));
+                committedItems.add(new CommittedItem(mapFileMetaData(svnFile), out.toByteArray()));
             }
-            visitCollectorPlugins(committedFiles);
+            visitCollectorPlugins(committedItems);
             return metrics;
         } catch (SVNException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void visitCollectorPlugins(List<CommittedFile> committedFiles) {
+    private void visitCollectorPlugins(List<CommittedItem> committedItems) {
         Set<CollectorPlugin> plugins = PluginRegistry.INSTANCE.getCollectorPlugins();
         for (CollectorPlugin plugin : plugins) {
             try {
-                metrics.join(plugin.analyzeCommittedFiles(committedFiles));
+                metrics.join(plugin.collectFileMetrics(committedItems));
             } catch (Exception e) {
                 logger.error(String.format("Collector plugin %s did not execute normally. Skipped plugin execution.",
                         plugin.getClass()), e);
@@ -78,8 +78,8 @@ public class CollectorPluginVisitor {
         }
     }
 
-    private FileMetaData mapFileMetaData(SvnFileMetaData svnFile) {
-        FileMetaData file = new FileMetaData();
+    private CommittedItemMetaData mapFileMetaData(SvnFileMetaData svnFile) {
+        CommittedItemMetaData file = new CommittedItemMetaData();
         file.setFileType(svnFile.getFileType());
         file.setModificationType(svnFile.getModificationType());
         file.setPath(svnFile.getFilePath());

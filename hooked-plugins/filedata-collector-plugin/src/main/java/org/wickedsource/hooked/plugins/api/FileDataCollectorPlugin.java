@@ -1,9 +1,8 @@
 package org.wickedsource.hooked.plugins.api;
 
 import org.wickedsource.hooked.plugins.api.collector.CollectorPlugin;
-import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
+import org.wickedsource.hooked.plugins.api.collector.CommittedItem;
 import org.wickedsource.hooked.plugins.api.collector.ModificationType;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -18,9 +17,9 @@ import java.util.Properties;
 public class FileDataCollectorPlugin implements CollectorPlugin {
 
     @Override
-    public FileMetrics analyzeCommittedFiles(List<CommittedFile> committedFiles) {
+    public FileMetrics collectFileMetrics(List<CommittedItem> committedItems) {
         FileMetrics resultList = new FileMetrics();
-        for (CommittedFile file : committedFiles) {
+        for (CommittedItem file : committedItems) {
             try {
                 FileMetrics metrics = analyzeFile(file);
                 resultList.join(metrics);
@@ -31,7 +30,7 @@ public class FileDataCollectorPlugin implements CollectorPlugin {
         return resultList;
     }
 
-    private FileMetrics analyzeFile(CommittedFile file) throws IOException {
+    private FileMetrics analyzeFile(CommittedItem file) throws IOException {
 
         String filename = file.getMetaData().getPath();
         FileDataMetrics metrics = new FileDataMetrics();

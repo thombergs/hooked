@@ -1,9 +1,7 @@
-package org.wickedsource.hooked.plugins.notifier;
+package org.wickedsource.hooked.plugins.api;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.wickedsource.hooked.plugins.api.collector.Metric;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>
@@ -39,8 +37,8 @@ public class FileMetricsTest {
         metrics.add("file1", METRIC1, 2L);
 
         // when
-        metrics.subtract("file1", METRIC1, 2L);
-        metrics.subtract("file2", METRIC1, 2L);
+        metrics.add("file1", METRIC1, -2L);
+        metrics.add("file2", METRIC1, -2L);
 
         // then
         Assert.assertEquals(metrics.get("file1", METRIC1), Long.valueOf(1));

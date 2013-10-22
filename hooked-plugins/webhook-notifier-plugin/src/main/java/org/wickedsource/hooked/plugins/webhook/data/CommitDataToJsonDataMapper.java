@@ -1,8 +1,8 @@
 package org.wickedsource.hooked.plugins.webhook.data;
 
-import org.wickedsource.hooked.plugins.api.collector.Metric;
+import org.wickedsource.hooked.plugins.api.Metric;
 import org.wickedsource.hooked.plugins.api.notifier.CommitData;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.FileMetrics;
 
 /**
  * @author Tom Hombergs <tom.hombergs@gmail.com>

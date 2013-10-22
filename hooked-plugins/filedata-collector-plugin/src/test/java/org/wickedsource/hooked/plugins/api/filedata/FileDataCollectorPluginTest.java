@@ -4,11 +4,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.wickedsource.hooked.plugins.api.FileDataCollectorPlugin;
 import org.wickedsource.hooked.plugins.api.FileDataMetrics;
-import org.wickedsource.hooked.plugins.api.collector.CommittedFile;
-import org.wickedsource.hooked.plugins.api.collector.FileMetaData;
+import org.wickedsource.hooked.plugins.api.collector.CommittedItem;
+import org.wickedsource.hooked.plugins.api.collector.CommittedItemMetaData;
 import org.wickedsource.hooked.plugins.api.collector.FileType;
 import org.wickedsource.hooked.plugins.api.collector.ModificationType;
-import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
+import org.wickedsource.hooked.plugins.api.FileMetrics;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,17 +24,17 @@ public class FileDataCollectorPluginTest {
     @Test
     public void test() {
         // given a file to analyze
-        FileMetaData metadata = new FileMetaData();
+        CommittedItemMetaData metadata = new CommittedItemMetaData();
         metadata.setPath("testfile.txt");
         metadata.setModificationType(ModificationType.ADDED);
         metadata.setFileType(FileType.FILE);
         byte[] content = readByteArrayFromClasspath("testfile.txt");
-        CommittedFile file = new CommittedFile(metadata, content);
-        List<CommittedFile> fileList = Collections.singletonList(file);
+        CommittedItem file = new CommittedItem(metadata, content);
+        List<CommittedItem> fileList = Collections.singletonList(file);
 
         // when analyzing the file with our plugin
         FileDataCollectorPlugin plugin = new FileDataCollectorPlugin();
-        FileMetrics fileMetrics = plugin.analyzeCommittedFiles(fileList);
+        FileMetrics fileMetrics = plugin.collectFileMetrics(fileList);
 
         // then the analyis statistics must be correct
         Assert.assertEquals(fileMetrics.get("testfile.txt", FileDataMetrics.LINES), Long.valueOf(14));
