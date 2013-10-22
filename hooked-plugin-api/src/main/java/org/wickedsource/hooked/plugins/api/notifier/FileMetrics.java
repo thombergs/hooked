@@ -69,8 +69,8 @@ public class FileMetrics implements Serializable {
             return Collections.emptySet();
         } else {
             return metricValues.keySet();
-        }
     }
+}
 
     public Set<String> getFilenames() {
         return metrics.keySet();

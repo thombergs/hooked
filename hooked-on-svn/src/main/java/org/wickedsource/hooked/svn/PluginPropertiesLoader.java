@@ -9,15 +9,26 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-/**
- * @author Tom Hombergs <tom.hombergs@gmail.com>
- */
 public class PluginPropertiesLoader {
 
+    /**
+     * The name of the system property that contains the absolute file path to the folder that contains the property files for all plugins.
+     */
     public static final String SYSTEM_PROPERTY_CONFIG_PATH = "hooked.configPath";
 
     private static final Logger logger = LoggerFactory.getLogger(PluginPropertiesLoader.class);
 
+    /**
+     * Returns the Properties that contain the configuration of the given Plugin.
+     * <p/>
+     * The properties are loaded from properties files in the folder whose path is contained in the system property with name
+     * {@link PluginPropertiesLoader#SYSTEM_PROPERTY_CONFIG_PATH}. The properties files are expected to be named exactly like the Plugin
+     * class (i.e. {@link Class#getSimpleName()} + ".properties". If no such file is found for the given Plugin class,
+     * the the Properties returned are empty.
+     *
+     * @param pluginClass the class of the {@link org.wickedsource.hooked.plugins.api.Plugin} whose configuration is to be retrieved.
+     * @return Properties that make up the configuration of the given Plugin.
+     */
     public Properties loadPluginProperties(Class<? extends Plugin> pluginClass) {
         if (logger.isTraceEnabled()) {
             logger.trace(String.format("Loading properties for plugin %s...", pluginClass.getSimpleName()));

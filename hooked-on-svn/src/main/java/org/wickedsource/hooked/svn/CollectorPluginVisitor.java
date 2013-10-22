@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author Tom Hombergs <tom.hombergs@gmail.com>
- */
 public class CollectorPluginVisitor {
 
     private static Logger logger = LoggerFactory.getLogger(CollectorPluginVisitor.class);
@@ -37,6 +34,12 @@ public class CollectorPluginVisitor {
         this.revision = revision;
     }
 
+    /**
+     * Goes through all files of a Subversion commit and passes them to the method to each installed
+     * {@link org.wickedsource.hooked.plugins.api.collector.CollectorPlugin}.
+     *
+     * @return the aggregated file metrics gathered by all collector plugins.
+     */
     public FileMetrics visitCollectorPlugins() {
         try {
             SVNLookClient lookClient = SVNKitUtil.createSVNLookClient();

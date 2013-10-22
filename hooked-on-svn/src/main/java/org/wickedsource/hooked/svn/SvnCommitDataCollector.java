@@ -10,22 +10,32 @@ import org.wickedsource.hooked.svn.data.SvnCommitData;
 
 import java.io.File;
 
-/**
- * @author Tom Hombergs <tom.hombergs@gmail.com>
- */
 public class SvnCommitDataCollector {
 
-    private File repositoryRoot;
+    private final File repositoryRoot;
 
-    private SVNRevision svnRevision;
-    private String repositoryUrl;
+    private final SVNRevision svnRevision;
 
+    private final String repositoryUrl;
+
+    /**
+     * Constructor.
+     *
+     * @param repositoryRoot the absolute path to the root of the Subversion repository in the local file system.
+     * @param svnRevision    the revision number of the current Subversion commit.
+     * @param repositoryUrl  the URL under which the Subversion repository is accessible from outside.
+     */
     public SvnCommitDataCollector(String repositoryRoot, Long svnRevision, String repositoryUrl) {
         this.repositoryUrl = repositoryUrl;
         this.repositoryRoot = new File(repositoryRoot);
         this.svnRevision = SVNRevision.create(svnRevision);
     }
 
+    /**
+     * Collects some basic data on the current Subversion commit.
+     *
+     * @return Subversion-specific data on the commit.
+     */
     public SvnCommitData collectCommitData() {
         try {
             SvnCommitData data = new SvnCommitData();

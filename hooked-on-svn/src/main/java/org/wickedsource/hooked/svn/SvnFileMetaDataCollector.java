@@ -51,6 +51,11 @@ public class SvnFileMetaDataCollector implements ISVNChangeEntryHandler {
         }
     }
 
+    /**
+     * Returns the metadata that was collected by SVNKit during the calls of {@link #handleEntry(org.tmatesoft.svn.core.wc.admin.SVNChangeEntry)}
+     *
+     * @return metadata on all files of a Subversion commit.
+     */
     public List<SvnFileMetaData> getCollectedMetaData() {
         return collectedData;
     }

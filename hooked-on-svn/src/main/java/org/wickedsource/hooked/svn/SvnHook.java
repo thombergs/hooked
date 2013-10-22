@@ -7,6 +7,22 @@ import org.wickedsource.hooked.plugins.api.notifier.FileMetrics;
 import org.wickedsource.hooked.svn.data.SvnCommitData;
 
 /**
+ * Main class for the Subversion Hook. The main method of this class can be called from a shell script that is hooked into SVN.
+ * <p/>
+ * <strong>Command line parameters (in this order):</strong>
+ * <ul>
+ * <li>path to the root of the Subversion repository in the Subversion server's local filesystem (this is also the first parameter
+ * that Subversion passes into the hook shell script of a post-commit hook)
+ * </li>
+ * <li>
+ * number of the current commit's revision (this is also the second parameter that Subversion passes into the hook shell script of a
+ * post-commit hook)
+ * </li>
+ * <li>
+ * URL of the Subversion repository. This URL is used as an identifier for the commit data.
+ * </li>
+ * </ul>
+ *
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
 public class SvnHook {
@@ -31,7 +47,7 @@ public class SvnHook {
     }
 
     /**
-     * Creates a fresh SvnHook object from input parameters.
+     * Creates a fresh SvnHook object from the command line arguments.s
      */
     private static SvnHook createSvnHook(String[] args) {
         if (args.length != 3) {
@@ -54,6 +70,11 @@ public class SvnHook {
         return new SvnHook(repositoryRoot, revisionNumber, repositoryUrl);
     }
 
+    /**
+     * Starts the processing of the Subversion hook. First collects Subversion specific data on the commit. Then passes this data to all
+     * installed collector plugins to let them add to the data. Finally passes the aggregated collected data to all notifier plugins to
+     * let them send the data to any receivers.
+     */
     public void run() {
         try {
             SvnCommitDataCollector collector = new SvnCommitDataCollector(repositoryRoot, revisionNumber, repositoryUrl);

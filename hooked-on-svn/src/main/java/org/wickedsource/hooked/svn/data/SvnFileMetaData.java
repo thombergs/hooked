@@ -4,6 +4,8 @@ import org.wickedsource.hooked.plugins.api.collector.FileType;
 import org.wickedsource.hooked.plugins.api.collector.ModificationType;
 
 /**
+ * Contains meta data on a file that was part of a Subversion commit.
+ *
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
 public class SvnFileMetaData {

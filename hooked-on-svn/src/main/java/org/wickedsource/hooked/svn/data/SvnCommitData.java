@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Contains all the data collected during analysis of a commit to a version control system.
+ * Contains all Subversion-specific data on a commit.s
  *
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */

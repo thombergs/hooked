@@ -7,13 +7,16 @@ import org.wickedsource.hooked.plugins.api.notifier.NotifierPlugin;
 
 import java.util.Set;
 
-/**
- * @author Tom Hombergs <tom.hombergs@gmail.com>
- */
 public class NotifierPluginVisitor {
 
     private static final Logger logger = LoggerFactory.getLogger(NotifierPluginVisitor.class);
 
+    /**
+     * Sends the aggregated data collected from the Subversion commit to all {@link org.wickedsource.hooked.plugins.api.notifier.NotifierPlugin}s
+     * that are currently installed.
+     *
+     * @param data the data collected from the Subversion commit.
+     */
     public void visitNotifierPlugins(CommitData data) {
         Set<NotifierPlugin> plugins = PluginRegistry.INSTANCE.getNotifierPlugins();
         for (NotifierPlugin plugin : plugins) {

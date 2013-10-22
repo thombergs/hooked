@@ -12,6 +12,10 @@ import java.util.ServiceLoader;
 import java.util.Set;
 
 /**
+ * Provides access to all installed plugins that add functionality to the SVN hook.
+ * <p/>
+ * A plugin is installed using the java {@link java.util.ServiceLoader} mechanism. See the javadoc there.
+ *
  * @author Tom Hombergs <tom.hombergs@gmail.com>
  */
 public enum PluginRegistry {
@@ -32,6 +36,10 @@ public enum PluginRegistry {
         getNotifierPlugins();
     }
 
+    /**
+     * Returns all installed collector plugins. See {@link org.wickedsource.hooked.plugins.api.collector
+     * .CollectorPlugin}.
+     */
     public synchronized Set<CollectorPlugin> getCollectorPlugins() {
         if (this.collectorPlugins == null) {
             logger.debug("Loading collector plugins...");
@@ -48,6 +56,9 @@ public enum PluginRegistry {
         return this.collectorPlugins;
     }
 
+    /**
+     * Returns all installed notifier plugins. See {@link org.wickedsource.hooked.plugins.api.notifier.NotifierPlugin}.
+     */
     public synchronized Set<NotifierPlugin> getNotifierPlugins() {
         if (this.notifierPlugins == null) {
             logger.debug("Loading notifier plugins...");
