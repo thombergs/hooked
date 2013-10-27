@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>filedata-collector-plugin</module>
+        <module>basic-diff-collector-plugin</module>
         <module>webhook-notifier-plugin</module>
     </modules>
 
